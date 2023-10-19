@@ -8,7 +8,7 @@ const Messenger = () => {
   const socket = useRef(null);
 
   function connect() {
-    socket.current = new WebSocket('wss://bca1-46-98-150-96.ngrok.io:8080');
+    socket.current = new WebSocket('wss://bca1-46-98-150-96.ngrok.io:80');
 
     socket.current.onopen = () => {
       setConnected(true);
