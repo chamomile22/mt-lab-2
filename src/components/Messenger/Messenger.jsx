@@ -68,7 +68,7 @@ const Messenger = () => {
             onChange={e => setValue(e.target.value)}
             type="text"
           />
-          <button onClick={sendMessage}>Отправить</button>
+          <button onClick={sendMessage}>Send</button>
         </div>
         <div className="messages">
           {messages.map(mess => (
