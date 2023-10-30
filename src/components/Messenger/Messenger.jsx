@@ -10,7 +10,7 @@ const Messenger = () => {
   const socket = useRef(null);
 
   function connect() {
-    socket.current = new WebSocket('ws://https://mt-lab2-server.onrender.com');
+    socket.current = new WebSocket('wss://mt-lab2-server.onrender.com');
     socket.current.onopen = () => {
       setConnected(true);
       const message = {
