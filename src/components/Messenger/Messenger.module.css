@@ -1,0 +1,103 @@
+.container{
+  width: 400px;
+  padding: 30px 15px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ebe9ed;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  box-shadow: 0 2px 10px #00000040;
+}
+
+.form{
+  display: flex;
+  justify-content: center;
+}
+
+.input{
+  width: 220px;
+  height: 30px;
+  padding: 2px 8px;
+  color: white;
+  background-color: #bab4c0;
+  border: 2px solid #55515d;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  outline: unset;
+
+
+}
+
+.btn{
+  width: 70px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  border: 2px solid #55515d;
+  border-left: none;
+  background-color: #55515d;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  &:hover{
+    background-color: #48444d;
+  }
+}
+
+.btnLeave{
+  width: 70px;
+  margin-left: 5px;
+  color: #726f79;
+  font-size: 15px;
+  font-weight: 600;
+  border: 2px solid #726f79;
+  background-color: transparent;
+  border-radius: 8px;
+
+  &:hover{
+    background-color: #bab4c0;
+  }
+}
+
+.messagesContainer{
+  margin-top: 15px;
+  width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.connectionMessage{
+  margin-bottom: 8px;
+  text-align: center;
+  color: #9161e6;
+}
+
+.messageWrapper{
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 7px 10px;
+  color: #3e3e3e;
+  font-size: 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 2px solid #3e3e3e;
+  border-radius: 6px;
+}
+
+.userName{
+  margin-right: 10px;
+  font-weight: 700;
+}
+
+.message{
+  width: 350px;
+}
+
+.messageText{
+  margin: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
