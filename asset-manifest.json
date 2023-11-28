@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/mt-lab2-client/static/css/main.fc4e8fc5.css",
-    "main.js": "/mt-lab2-client/static/js/main.4fd72357.js",
+    "main.css": "/mt-lab2-client/static/css/main.c513fa8b.css",
+    "main.js": "/mt-lab2-client/static/js/main.0e19659a.js",
     "index.html": "/mt-lab2-client/index.html",
-    "main.fc4e8fc5.css.map": "/mt-lab2-client/static/css/main.fc4e8fc5.css.map",
-    "main.4fd72357.js.map": "/mt-lab2-client/static/js/main.4fd72357.js.map"
+    "main.c513fa8b.css.map": "/mt-lab2-client/static/css/main.c513fa8b.css.map",
+    "main.0e19659a.js.map": "/mt-lab2-client/static/js/main.0e19659a.js.map"
   },
   "entrypoints": [
-    "static/css/main.fc4e8fc5.css",
-    "static/js/main.4fd72357.js"
+    "static/css/main.c513fa8b.css",
+    "static/js/main.0e19659a.js"
   ]
 }
