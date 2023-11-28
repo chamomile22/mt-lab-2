@@ -19,6 +19,7 @@ const GamePage = () => {
     const isWin = board.cells.filter(cell=>{
       return cell.mark === 'damage' || cell.mark === 'miss'
     })
+    console.log(isWin)
   }, [board]);
 
   const { gameId } = useParams();
@@ -76,7 +77,7 @@ const GamePage = () => {
         }
       }))
     restart();
-  }, []);
+  }, [name, gameId]);
 
 
   function restart() {
