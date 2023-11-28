@@ -1,0 +1,26 @@
+.wrapper{
+  text-align: center;
+}
+
+.heading{
+  font-size: 26px;
+  margin-top: 20px;
+  margin-bottom: 70px;
+}
+
+.boardsContainer{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.playerName{
+  color: #49668b;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.rivalName{
+  color: orange;
+  font-size: 17px;
+  font-weight: 600;
+}
