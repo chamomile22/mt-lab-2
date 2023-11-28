@@ -5,7 +5,7 @@ import { BoardClass } from "../../models/BoardClass";
 import Board from "../../components/Board/Board";
 import Info from "../../components/Info/Info";
 
-const wss = new WebSocket('ws://localhost:8080');
+const wss = new WebSocket('wss://mt-lab2-server.onrender.com');
 
 const GamePage = () => {
   const [board, setBoard] = useState(new BoardClass());
