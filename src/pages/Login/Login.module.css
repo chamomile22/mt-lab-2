@@ -1,0 +1,109 @@
+.wrapper{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate(-50%, -50%);
+}
+
+.heading{
+  color: #4b628b;
+  text-align: center;
+  font-size: 28px;
+  margin-top: 20px;
+}
+
+.form{
+  margin-top: 30px;
+}
+
+.inputName{
+  width: calc(100% - 20px);
+  height: 40px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 17px;
+  border: 2px solid #a9c6e1;
+  border-radius: 10px;
+  outline: unset;
+
+  transition: border-color 150ms ease-in-out;
+
+  &::placeholder{
+    color: #43546b;
+  }
+
+  &:hover, &:focus{
+    border-color: #5674A5;
+  }
+}
+
+.variantList{
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.variantItem{
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.variantInput{
+  width: 14px;
+  height: 14px;
+}
+
+.btnSubmit{
+  display: block;
+  width: 200px;
+  height: 40px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: #a0bbd5;
+  border: none;
+  border-radius: 8px;
+
+  transition-property: background-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+
+  &:hover{
+    background-color: #7e96bc;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.inputId{
+  margin-top: 9px;
+  width: calc(100% - 20px);
+  height: 40px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 17px;
+  border: 2px solid #a9c6e1;
+  border-radius: 10px;
+  outline: unset;
+
+  transition: border-color 150ms ease-in-out;
+
+  &::placeholder{
+    color: #43546b;
+  }
+
+  &:hover, &:focus{
+    border-color: #5674A5;
+  }
+}
