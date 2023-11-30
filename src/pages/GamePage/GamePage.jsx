@@ -40,7 +40,7 @@ const GamePage = () => {
     if(isRivalWin){
       navigate('/');
     }
-  }, [board, rivalBoard]);
+  }, [board, rivalBoard, gameId, rivalName, navigate]);
   
   wss.onmessage = (response) => {
     const { type, payload } = JSON.parse(response.data);
@@ -136,7 +136,7 @@ const GamePage = () => {
       }
     }))
     restart();
-  }, []);
+  }, [name, gameId]);
   
   function changeBoardAfterShoot(board, setBoard, x, y, isHit) {
     isHit ? board.addDamage(x, y) : board.addMiss(x, y);
