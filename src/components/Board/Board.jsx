@@ -1,27 +1,31 @@
 import Cell from "../Cell/Cell";
 import css from './Board.module.css';
 
-const Board = ({board, setBoard, isShipsReady, isMyBoard=false, canShoot, shoot})=>{
+const Board = ({ board, setBoard, isShipsReady, isMyBoard, canShoot, shoot }) => {
   
-  const updateBoard = ()=>{
+  const updateBoard = () => {
     const newBoard = board.getCopyBoard();
     setBoard(newBoard);
   }
   
-  const addMark = (x, y)=>{
-    if(!isShipsReady && isMyBoard){
-      board.addShip(x, y);
-    } else if(canShoot && !isMyBoard) {
+  const addMark = (x, y) => {
+    if (!isShipsReady && isMyBoard) {
+      if (board.getCells(x, y).mark?.name === 'ship') {
+        board.getCells(x, y).mark = null;
+      } else {
+        board.addShip(x, y);
+      }
+    } else if (canShoot && !isMyBoard) {
       shoot(x, y);
     }
-
+    
     updateBoard();
   }
-
+  
   return (<div className={`${css.container} ${canShoot && css.activeShoot}`}>
-    {board.cells.map((el, index)=>{
+    {board.cells.map((el, index) => {
       return <div className={css.row} key={index}>
-        {el.map(item=>{
+        {el.map(item => {
           return <Cell key={item.id} cell={item} addMark={addMark}/>
         })}
       </div>

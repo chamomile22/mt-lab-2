@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { BoardClass } from "../../models/BoardClass";
 import Board from "../../components/Board/Board";
 import Info from "../../components/Info/Info";
+import { toast } from "react-toastify";
 
 const wss = new WebSocket('ws://localhost:4000');
 
@@ -18,15 +19,32 @@ const GamePage = () => {
   const name = localStorage.getItem('nickname');
   
   useEffect(() => {
-    const isWin = board.cells.filter(cell => {
-      return cell.mark?.name === 'damage' || cell.mark === 'miss' || !cell?.mark
-    })
-    console.log(isWin)
-  }, [board]);
+    const isWin = board.cells.flatMap(cells => cells).filter(cell => {
+      return cell.mark?.name === 'damage' || cell.mark === 'miss'
+    }).length === 20;
+    const isRivalWin = rivalBoard.cells.flatMap(cells => cells).filter(cell => {
+      return cell.mark?.name === 'damage' || cell.mark === 'miss'
+    }).length === 20;
+    
+    if(isWin){
+      wss.send(JSON.stringify({
+        event: 'win',
+        payload: {
+          username: rivalName,
+          gameId,
+          winner: rivalName,
+        }
+      }));
+      navigate('/');
+    }
+    if(isRivalWin){
+      navigate('/');
+    }
+  }, [board, rivalBoard]);
   
   wss.onmessage = (response) => {
     const { type, payload } = JSON.parse(response.data);
-    const { username, x, y, canStart, rivalName, success } = payload;
+    const { username, firstPlayer, x, y, canStart, rivalName, success } = payload;
     
     switch (type) {
       case 'connectToGame':
@@ -36,12 +54,12 @@ const GamePage = () => {
         setRivalName(rivalName);
         break;
       case 'readyToPlay':
-        if (payload.username === name && canStart) {
+        if (payload.username === name && canStart && firstPlayer) {
           setCanShoot(true);
         }
         break;
       case 'afterShoot':
-        if (username !== name) {
+        if (username !== name && board.cells[y][x].mark?.name !== 'damage' && board.cells[y][x].mark?.name !== 'miss') {
           const isHit = board.cells[y][x].mark?.name === 'ship';
           changeBoardAfterShoot(board, setBoard, x, y, isHit);
           wss.send(JSON.stringify({
@@ -58,9 +76,12 @@ const GamePage = () => {
         break;
       case 'isHit':
         if (username === name) {
-          changeBoardAfterShoot(board, setBoard, x, y, payload.isHit);
+          changeBoardAfterShoot(rivalBoard, setRivalBoard, x, y, payload.isHit);
           payload.isHit ? setCanShoot(true) : setCanShoot(false);
         }
+        break;
+      case 'won':
+          toast.success(`Winner is ${payload.winner}`)
         break;
       default:
         break;
@@ -89,14 +110,21 @@ const GamePage = () => {
   }
   
   function ready() {
-    wss.send(JSON.stringify({
-      event: 'ready',
-      payload: {
-        username: name,
-        gameId
-      }
-    }));
-    setShipsReady(true);
+    const shipsAmount = board.cells.flatMap(cells => cells).filter(cell => {
+      return cell.mark?.name === 'ship'
+    }).length;
+    if (shipsAmount === 20) {
+      wss.send(JSON.stringify({
+        event: 'ready',
+        payload: {
+          username: name,
+          gameId
+        }
+      }));
+      setShipsReady(true);
+    } else{
+      toast.warn(`Ships amount must be 20. Your amount is ${shipsAmount}`);
+    }
   }
   
   useEffect(() => {
@@ -128,7 +156,7 @@ const GamePage = () => {
             setBoard={setBoard}
             isShipsReady={shipsReady}
             canShoot={false}
-            isMyBoard={true}/>
+            isMyBoard/>
         </div>
         <div>
           <p className={css.rivalName}>{rivalName || 'no rivals'}</p>

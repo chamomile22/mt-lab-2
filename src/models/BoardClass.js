@@ -2,6 +2,7 @@ import { CellClass } from "./CellClass";
 import { ShipClass } from "./ShipClass";
 import { MissClass } from "./MissClass";
 import { DamageClass } from "./DamageClass";
+import { MarkClass } from "./MarkClass";
 
 export class BoardClass {
   cells = [];
