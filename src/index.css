@@ -37,6 +37,9 @@ code {
 }
 
 .damage {
-  color: #df4343;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #d33c3c;
   background-color: #8fbcba;
 }

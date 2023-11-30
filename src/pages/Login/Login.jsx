@@ -7,17 +7,19 @@ const Login = () => {
   const [nickname, setNickname] = useState('');
   const [gameId, setGameId] = useState('');
   const navigate = useNavigate();
-
+  
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     const {
-      elements: {nickname, variant, gameId}
+      elements: { nickname, variant, gameId }
     } = e.target;
     let id = variant.value === 'newGame' ? new Date().getTime() : gameId.value;
-    localStorage.setItem('nickname', nickname.value);
-    navigate(`/game/${id}`);
+    if (nickname && id) {
+      localStorage.setItem('nickname', nickname.value);
+      navigate(`/game/${id}`);
+    }
   }
-
+  
   return (
     <div className={css.wrapper}>
       <h1 className={css.heading}>Enter the game</h1>
@@ -47,14 +49,14 @@ const Login = () => {
             <label htmlFor="byGameId" className={css.variantLabel}>Continue existing game</label>
           </li>
         </ul>
-          <input
-            className={css.inputName}
-            type="text"
-            name="nickname"
-            placeholder="Nickname"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            required/>
+        <input
+          className={css.inputName}
+          type="text"
+          name="nickname"
+          placeholder="Nickname"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+          required/>
         {isByInvitation && <input
           className={css.inputId}
           type="text"

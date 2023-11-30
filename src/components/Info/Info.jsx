@@ -1,6 +1,8 @@
-const Info = ({ready, canShoot, shipsReady})=>{
+import css from './Info.module.css';
+
+const Info = ({ready=false, canShoot=false, shipsReady})=>{
   if(!shipsReady){
-    return <button type="button" onClick={()=>ready()}>Ready to play</button>
+    return <button className={css.buttonReady} type="button" onClick={()=>ready()}>Ready to play</button>
   }
   return <div>
     {canShoot ? <p>Your turn</p> : <p>Rivals turn</p>}

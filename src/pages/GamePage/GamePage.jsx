@@ -5,7 +5,7 @@ import { BoardClass } from "../../models/BoardClass";
 import Board from "../../components/Board/Board";
 import Info from "../../components/Info/Info";
 
-const wss = new WebSocket('wss://mt-lab2-server.onrender.com');
+const wss = new WebSocket('ws://localhost:4000');
 
 const GamePage = () => {
   const [board, setBoard] = useState(new BoardClass());
@@ -14,51 +14,50 @@ const GamePage = () => {
   const [shipsReady, setShipsReady] = useState(false);
   const [canShoot, setCanShoot] = useState(false);
   const navigate = useNavigate();
+  const { gameId } = useParams();
+  const name = localStorage.getItem('nickname');
   
   useEffect(() => {
-    const isWin = board.cells.filter(cell=>{
-      return cell.mark === 'damage' || cell.mark === 'miss'
+    const isWin = board.cells.filter(cell => {
+      return cell.mark?.name === 'damage' || cell.mark === 'miss' || !cell?.mark
     })
     console.log(isWin)
   }, [board]);
-
-  const { gameId } = useParams();
-  const name = localStorage.getItem('nickname');
-
-  wss.onmessage = (response)=>{
-    const {type, payload} = JSON.parse(response.data);
-    const {username, x, y, canStart, rivalName, success} = payload;
-
-    switch (type){
+  
+  wss.onmessage = (response) => {
+    const { type, payload } = JSON.parse(response.data);
+    const { username, x, y, canStart, rivalName, success } = payload;
+    
+    switch (type) {
       case 'connectToGame':
-        if(!success){
+        if (!success) {
           return navigate('/');
         }
         setRivalName(rivalName);
         break;
       case 'readyToPlay':
-        if(payload.username === name && canStart){
+        if (payload.username === name && canStart) {
           setCanShoot(true);
         }
         break;
       case 'afterShoot':
-        if(username !== name){
+        if (username !== name) {
           const isHit = board.cells[y][x].mark?.name === 'ship';
           changeBoardAfterShoot(board, setBoard, x, y, isHit);
           wss.send(JSON.stringify({
             event: 'checkShoot',
             payload: {
               ...payload,
-              isHit
+              isHit: isHit
             }
           }))
-          if(!isHit){
+          if (!isHit) {
             setCanShoot(true);
           }
         }
         break;
       case 'isHit':
-        if(username === name){
+        if (username === name) {
           changeBoardAfterShoot(board, setBoard, x, y, payload.isHit);
           payload.isHit ? setCanShoot(true) : setCanShoot(false);
         }
@@ -67,19 +66,7 @@ const GamePage = () => {
         break;
     }
   }
-
-  useEffect(() => {
-    wss.send(JSON.stringify({
-        event: 'connect',
-        payload: {
-          username: name,
-          gameId: gameId
-        }
-      }))
-    restart();
-  }, [name, gameId]);
-
-
+  
   function restart() {
     const newBoard = new BoardClass();
     const newRivalBoard = new BoardClass();
@@ -88,7 +75,7 @@ const GamePage = () => {
     setBoard(newBoard)
     setRivalBoard(newRivalBoard)
   }
-
+  
   function shoot(x, y) {
     wss.send(JSON.stringify({
       event: 'shoot',
@@ -100,7 +87,7 @@ const GamePage = () => {
       }
     }));
   }
-
+  
   function ready() {
     wss.send(JSON.stringify({
       event: 'ready',
@@ -111,13 +98,24 @@ const GamePage = () => {
     }));
     setShipsReady(true);
   }
-
+  
+  useEffect(() => {
+    wss.send(JSON.stringify({
+      event: 'connect',
+      payload: {
+        username: name,
+        gameId: gameId
+      }
+    }))
+    restart();
+  }, []);
+  
   function changeBoardAfterShoot(board, setBoard, x, y, isHit) {
     isHit ? board.addDamage(x, y) : board.addMiss(x, y);
     const newBoard = board.getCopyBoard();
     setBoard(newBoard);
   }
-
+  
   return (
     <div className={css.wrapper}>
       <h1 className={css.heading}>Welcome!</h1>
@@ -130,7 +128,7 @@ const GamePage = () => {
             setBoard={setBoard}
             isShipsReady={shipsReady}
             canShoot={false}
-            isMyBoard/>
+            isMyBoard={true}/>
         </div>
         <div>
           <p className={css.rivalName}>{rivalName || 'no rivals'}</p>

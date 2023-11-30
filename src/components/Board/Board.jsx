@@ -1,7 +1,13 @@
 import Cell from "../Cell/Cell";
 import css from './Board.module.css';
 
-const Board = ({board, setBoard, isShipsReady, isMyBoard, canShoot, shoot})=>{
+const Board = ({board, setBoard, isShipsReady, isMyBoard=false, canShoot, shoot})=>{
+  
+  const updateBoard = ()=>{
+    const newBoard = board.getCopyBoard();
+    setBoard(newBoard);
+  }
+  
   const addMark = (x, y)=>{
     if(!isShipsReady && isMyBoard){
       board.addShip(x, y);
@@ -10,11 +16,6 @@ const Board = ({board, setBoard, isShipsReady, isMyBoard, canShoot, shoot})=>{
     }
 
     updateBoard();
-  }
-
-  const updateBoard = ()=>{
-    const newBoard = board.getCopyBoard();
-    setBoard(newBoard);
   }
 
   return (<div className={`${css.container} ${canShoot && css.activeShoot}`}>
