@@ -6,7 +6,7 @@ import Board from "../../components/Board/Board";
 import Info from "../../components/Info/Info";
 import { toast } from "react-toastify";
 
-const wss = new WebSocket('ws://localhost:4000');
+const wss = new WebSocket('wss://mt-lab2-server.onrender.com');
 
 const GamePage = () => {
   const [board, setBoard] = useState(new BoardClass());
